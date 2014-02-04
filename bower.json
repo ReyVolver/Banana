@@ -1,0 +1,9 @@
+{
+  "name": "Nodash",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery": "~1.10.2",
+    "font-awesome": "*"
+  }
+}

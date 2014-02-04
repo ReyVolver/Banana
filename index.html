@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>noDash - Dashboard template</title>
+	<link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" hrel="js/prefixfree.mis.js"></script>
+</head>
+<body>
+
+
+	<nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">NoDash</a>
+			</div>
+		</div><!-- /.container-fluid -->
+	</nav>
+	
+	<div class="container-fluid layout">
+
+		<div class="row layout">
+
+			<div class="col-md-12" id="content">
+				<div class="row">
+					
+					<div class="col-md-4">
+						<div class="block">
+							<span class="glyphicon glyphicon-tasks icon"></span>
+							<a href="#" class="pull-right refresh option-icon">
+								<i class="fa fa-refresh"></i>
+							</a>
+							<a href="#" class="pull-right fullscreen option-icon">
+								<i class="fa fa-arrows-alt"></i>
+							</a>
+							<div class="inner">
+								<h5>RAM</h5>
+								<div class="progress">
+									<div class="progress-bar progress-bar-info" style="width: 35%">
+										<span class="sr-only">35% Used</span>
+									</div>
+								<!-- <div class="progress-bar progress-bar-info" style="width: 65%">
+									<span class="sr-only">65% Free (warning)</span>
+								</div> -->
+							</div>
+
+							<h5>CPU</h5>
+							<div class="progress">
+								<div class="progress-bar progress-bar-info" style="width: 15%">
+									<span class="sr-only">35% Used</span>
+								</div>
+								<!-- <div class="progress-bar progress-bar-info" style="width: 85%">
+									<span class="sr-only">65% Free (warning)</span>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="block">
+						<span class="glyphicon glyphicon-flash icon"></span>
+						<div class="inner">
+							<p class="lead text-center uptime">Uptime 377 days 7h 13min 12s</p>
+							<p class="small">Darwin mbp.local 13.0.0 Darwin Kernel Version 13.0.0: Thu Sep 19 22:22:27 PDT 2013; root:xnu-2422.1.72~6/RELEASE_X86_64 x86_64</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="block">
+						<span class="glyphicon glyphicon-user icon"></span>
+						<div class="inner">
+							<!-- <p class="lead text-center">No user online</p> -->
+							<table class="table">
+								<tr>
+									<td>ReyVolver</td>
+									<td>ttys001</td>
+									<td>Jan 14 13:23</td>
+								</tr>
+								<tr>
+									<td>ReyVolver</td>
+									<td>ttys001</td>
+									<td>Jan 14 13:23</td>
+								</tr>
+								<tr>
+									<td>ReyVolver</td>
+									<td>ttys001</td>
+									<td>Jan 14 13:23</td>
+								</tr>
+								<tr>
+									<td>ReyVolver</td>
+									<td>ttys001</td>
+									<td>Jan 14 13:23</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="block chart">
+						<div id="donut"></div>
+
+					</div>
+				</div>
+
+
+				<div class="col-md-8">
+					<div class="block chart">
+						<div id="chartcountry"></div>
+
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div>
+
+<div id="bg-wrapper"></div>
+<div id="modal">
+	<a href="#" class="pull-right close close-modal">
+		<i class="fa fa-times"></i>
+	</a>
+	<div class="inner">
+
+	</div>
+</div>
+
+
+
+<script src="components/jquery/jquery.min.js"></script>
+<script src="js/amcharts/amcharts.js"></script>
+<script src="js/amcharts/pie.js"></script>
+<script src="js/amcharts/serial.js"></script>
+<script>
+	$(document).ready(function() {
+
+		$('.fullscreen').click(function(e){
+			e.preventDefault();
+			$('#modal .inner').html($(this).parent().children('.inner').html());
+			$('#bg-wrapper').fadeIn(200);
+			$('#modal').fadeIn(200);
+
+		})
+
+		$('.close-modal').click(function(event) {
+			$('#bg-wrapper').fadeOut(200);
+			$('#modal').fadeOut(200);
+			$('#modal .inner').html('');
+		});
+
+		$('.block .inner').each(function(i){
+			var parent = $(this).parent('.block');
+			$(this).css('margin-top', ((parent.innerHeight() - $(this).innerHeight()) / 2) - 25 + 'px');
+		});
+
+		AmCharts.makeChart("donut", {
+			"type": "pie",
+			"theme": "light",
+			"dataProvider": [{
+				"title": "/dev/disk1",
+				"value": 120
+			}, {
+				"title": "/dev/disk2",
+				"value": 360
+			}, {
+				"title": "/swap",
+				"value": 30
+			}],
+			"titleField": "title",
+			"valueField": "value",
+			"labelRadius": 5,
+
+			"radius": "42%",
+			"innerRadius": "60%",
+			"labelText": "[[title]]"
+		});
+
+		AmCharts.makeChart("chartcountry", {
+			"type": "serial",
+			"theme": "none",
+			"dataProvider": [{
+				"country": "USA",
+				"visits": 2025
+			}, {
+				"country": "China",
+				"visits": 1882
+			}, {
+				"country": "Japan",
+				"visits": 1809
+			}, {
+				"country": "Germany",
+				"visits": 1322
+			}, {
+				"country": "UK",
+				"visits": 1122
+			}, {
+				"country": "France",
+				"visits": 1114
+			}, {
+				"country": "India",
+				"visits": 984
+			}, {
+				"country": "Spain",
+				"visits": 711
+			}, {
+				"country": "Netherlands",
+				"visits": 665
+			}, {
+				"country": "Russia",
+				"visits": 580
+			}, {
+				"country": "South Korea",
+				"visits": 443
+			}, {
+				"country": "Canada",
+				"visits": 441
+			}, {
+				"country": "Brazil",
+				"visits": 395
+			}],
+			"valueAxes": [{
+				"gridColor":"#FFFFFF",
+				"gridAlpha": 0.2,
+				"dashLength": 0
+			}],
+			"gridAboveGraphs": true,
+			"startDuration": 1,
+			"graphs": [{
+				"balloonText": "[[category]]: <b>[[value]]</b>",
+				"fillAlphas": 0.8,
+				"lineAlpha": 0.2,
+				"type": "column",
+				"valueField": "visits"		
+			}],
+			"chartCursor": {
+				"categoryBalloonEnabled": false,
+				"cursorAlpha": 0,
+				"zoomable": false
+			},
+			"categoryField": "country",
+			"categoryAxis": {
+				"gridPosition": "start",
+				"gridAlpha": 0
+			}
+		});
+});
+</script>
+
+</body>
+</html>
