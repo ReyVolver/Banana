@@ -1,4 +1,4 @@
-Banana
+[Banana](http://martinfrappat.com/github/Banana/)
 ======
 
 Template for server dashboard
